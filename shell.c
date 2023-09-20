@@ -1,89 +1,62 @@
 #include "shell.h"
-
 /**
- * main - Simple Shell (Hsh)
- * @argc: Argument Count
- * @argv:Argument Value
- * Return: Exit Value By Status
+ * execute - find in command special caracter and run
+ * @line2: command
+ * @cont: number of commands.
+ * @v: command.
+ * @t: error of the command.
+ * @n: name of the exe.
+ * Return: 0
  */
-
-int main(__attribute__((unused)) int argc, char **argv)
+int execute(char line2[], int cont, char *v, char *t, char *n)
 {
-	char *input, **cmd;
-	int counter = 0, statue = 1, st = 0;
+	int lengthline2 = _strlen(line2);
+	int flaqsc = 0, ex = 0;
+	char *copy = NULL;
+	char *path;
+	char **dpath;
 
-	if (argv[1] != NULL)
-		read_file(argv[1], argv);
-	signal(SIGINT, signal_to_handel);
-	while (statue)
+	copy = _calloc(lengthline2 + 1, sizeof(char));
+	path = gpath();
+	dpath = splitPath(path);
+	flaqsc = flaqs(line2);
+	_strcpy(copy, line2);
+	if (flaqsc == 0)
 	{
-		counter++;
-		if (isatty(STDIN_FILENO))
-			prompt();
-		input = _getline();
-		if (input[0] == '\0')
-		{
-			continue;
-		}
-		history(input);
-		cmd = parse_cmd(input);
-		if (_strcmp(cmd[0], "exit") == 0)
-		{
-			exit_bul(cmd, input, argv, counter);
-		}
-		else if (check_builtin(cmd) == 0)
-		{
-			st = handle_builtin(cmd, st);
-			free_all(cmd, input);
-			continue;
-		}
-		else
-		{
-			st = check_cmd(cmd, input, counter, argv);
-
-		}
-		free_all(cmd, input);
+		ex = run(line2, dpath, cont, v, t, n);
 	}
-	return (statue);
+	else if (flaqsc == 1)
+	{
+		ex = scolon(copy, dpath, cont, v, t, n);
+	}
+	else if (flaqsc == 3)
+	{
+		ex = OO(copy, dpath, cont, v, t, n);
+	}
+	else if (flaqsc == 4)
+	{
+		ex = YY(copy, dpath, cont, v, t, n);
+	}
+	free(path);
+	free(copy);
+	free(dpath);
+	return (ex);
 }
 /**
- * check_builtin - check builtin
- *
- * @cmd:command to check
- * Return: 0 Succes -1 Fail
+ * count - count number of delimiter in the command
+ * @line2: command
+ * @c: delimiter
+ * Return: number of the delimiter
  */
-int check_builtin(char **cmd)
+int count(char line2[], char c)
 {
-	bul_t fun[] = {
-		{"cd", change_dir},
-		{"echo", echo_bul},
-		{"history", NULL},
-		{NULL, NULL}
-	};
-	int i = 0;
-		if (*cmd == NULL)
-	{
-		return (-1);
-	}
+	int j = 0, k = 0;
 
-	while ((fun + i)->command)
+	while (line2[j])
 	{
-		if (_strcmp(cmd[0], (fun + i)->command) == 0)
-			return (0);
-		i++;
+		if (line2[j] == c)
+			k++;
+		j++;
 	}
-	return (-1);
-}
-/**
- * creat_envi - Creat Array of Enviroment Variable
- * @envi: Array of Enviroment Variable
- * Return: Void
- */
-void creat_envi(char **envi)
-{
-	int i;
-
-	for (i = 0; environ[i]; i++)
-		envi[i] = _strdup(environ[i]);
-	envi[i] = NULL;
+	return (k);
 }
