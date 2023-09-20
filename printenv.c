@@ -7,7 +7,7 @@
  * Return: (zero)
  */
 
-int printenv(__attribute((unused)) char **av, __attribute((unused)), int *exit_status)
+int printenv(__attribute((unused)) char **av, __attribute((unused)) int *exit_status)
 {
 	int i = 0;
 
@@ -25,7 +25,7 @@ int printenv(__attribute((unused)) char **av, __attribute((unused)), int *exit_s
  * Return: (0) on success
  */
 
-int _setenv(char **av, __attribute((unused)), int *exit_status)
+int _setenv(char **av, __attribute((unused)) int *exit_status)
 {
 	int status = 0;
 
@@ -53,7 +53,7 @@ int _setenv(char **av, __attribute((unused)), int *exit_status)
  *     * Return: (0) on success
  */
 
-int _unsetenv(char **av, __attribute((unused)), int *exit_status)
+int _unsetenv(char **av, __attribute((unused)) int *exit_status)
 {
 	int status = 0;
 
