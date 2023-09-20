@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # SIMPLE SHELL
 
 ## Descrition
@@ -16,3 +17,6 @@ $ `/bin/pwd` print current working directory name
 $ `ls` list file
 
 
+=======
+THIS IS MY SIMPLE SHELL PROJECT FOR ALX 
+>>>>>>> main
