@@ -61,7 +61,7 @@ int check_builtin(char **cmd)
 		{NULL, NULL}
 	};
 	int i = 0;
-		if (*cmd == NULL)
+	if (*cmd == NULL)
 	{
 		return (-1);
 	}

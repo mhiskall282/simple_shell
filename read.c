@@ -2,19 +2,19 @@
 #include "shell.h"
 
 /**
-* _getline - Read The Input By User From Stdin
-* Return: Input
-*/
+ * _getline - Read The Input By User From Stdin
+ * Return: Input
+ */
 char *_getline()
 {
-int i, buffsize = BUFSIZE, rd;
-char c = 0;
-char *buff = malloc(buffsize);
+	int i, buffsize = BUFSIZE, rd;
+	char c = 0;
+	char *buff = malloc(buffsize);
 
 	if (buff == NULL)
 	{
-		free(buff);
-		return (NULL);
+		perror("malloc failed");
+		exit(EXIT_FAILURE);
 	}
 
 	for (i = 0; c != EOF && c != '\n'; i++)
@@ -26,7 +26,6 @@ char *buff = malloc(buffsize);
 			free(buff);
 			exit(EXIT_SUCCESS);
 		}
-		buff[i] = c;
 		if (buff[0] == '\n')
 		{
 			free(buff);
@@ -34,12 +33,14 @@ char *buff = malloc(buffsize);
 		}
 		if (i >= buffsize)
 		{
+			buffsize *= 2;
 			buff = _realloc(buff, buffsize, buffsize + 1);
 			if (buff == NULL)
 			{
 				return (NULL);
 			}
 		}
+		buff[i] = c;
 	}
 	buff[i] = '\0';
 	hashtag_handle(buff);
@@ -55,12 +56,12 @@ void hashtag_handle(char *buff)
 {
 	int i;
 
-		for (i = 0; buff[i] != '\0'; i++)
+	for (i = 0; buff[i] != '\0'; i++)
+	{
+		if (buff[i] == '#')
 		{
-			if (buff[i] == '#')
-			{
 			buff[i] = '\0';
 			break;
-			}
+		}
 	}
 }

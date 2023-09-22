@@ -48,10 +48,10 @@ int print_echo(char **cmd)
 	pid = fork();
 	if (pid == 0)
 	{
-	if (execve("/bin/echo", cmd, environ) == -1)
-	{
-		return (-1);
-	}
+		if (execve("/bin/echo", cmd, environ) == -1)
+		{
+			return (-1);
+		}
 		exit(EXIT_FAILURE);
 	}
 	else if (pid < 0)
