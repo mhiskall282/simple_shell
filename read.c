@@ -8,7 +8,7 @@
 char *_getline()
 {
 	int i, buffsize = BUFSIZE, rd;
-	char c = 0;
+	char c = '\0';
 	char *buff = malloc(buffsize);
 
 	if (buff == NULL)
@@ -17,6 +17,7 @@ char *_getline()
 		exit(EXIT_FAILURE);
 	}
 
+	buff[0] = '\0';
 	for (i = 0; c != EOF && c != '\n'; i++)
 	{
 		fflush(stdin);
